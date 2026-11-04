@@ -1,0 +1,36 @@
+# Python Virtual Environments
+venv/
+.venv/
+env/
+pip-log.txt
+
+# Python Cache and Compiled Files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Secrets and Environment Variables
+.env
+.env.*
+*.pem
+secret.json
+
+# macOS System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code and IDE Settings
+.vscode/
+.idea/
+*.swp
+
+# Logs and Databases
+*.log
+*.sqlite3
+
+# Packaging and Distribution
+build/
+dist/
+*.egg-info/
