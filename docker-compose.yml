@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: ecommerce_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  user-service:
+    build: ./user-service
+    container_name: user_service
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+      - DB_NAME=ecommerce_user_db
+      - APP_PORT=8000
+    depends_on:
+      - mongodb
+
+  catalog-service:
+    build: ./catalog-service
+    container_name: catalog_service
+    ports:
+      - "8001:8001"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+      - DB_NAME=ecommerce_catalog_db
+      - APP_PORT=8001
+    depends_on:
+      - mongodb
+
+  inventory-service:
+    build: ./inventory-service
+    container_name: inventory_service
+    ports:
+      - "8002:8002"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+      - DB_NAME=ecommerce_inventory_db
+      - APP_PORT=8002
+    depends_on:
+      - mongodb
+
+  order-service:
+    build: ./order-service
+    container_name: order_service
+    ports:
+      - "8003:8003"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+      - DB_NAME=ecommerce_order_db
+      - USER_SERVICE_URL=http://user-service:8000
+      - CATALOG_SERVICE_URL=http://catalog-service:8001
+      - INVENTORY_SERVICE_URL=http://inventory-service:8002
+      - APP_PORT=8003
+    depends_on:
+      - mongodb
+      - user-service
+      - catalog-service
+      - inventory-service
+
+volumes:
+  mongo_data:

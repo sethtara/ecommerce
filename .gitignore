@@ -34,3 +34,5 @@ secret.json
 build/
 dist/
 *.egg-info/
+*.tar
+*.zip
