@@ -1,4 +1,5 @@
 from contextlib import asynccontextmanager
+import os
 from fastapi import FastAPI
 from app.database import connect_to_mongo, close_mongo_connection
 from app.routes.inventory import router as inventory_router
@@ -9,7 +10,7 @@ async def lifespan(app: FastAPI):
     yield
     close_mongo_connection()
 
-app = FastAPI(title="E-commerce Inventory Service", lifespan=lifespan)
+app = FastAPI(root_path=os.getenv("ROOT_PATH", ""))
 app.include_router(inventory_router)
 
 @app.get("/")

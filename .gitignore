@@ -35,4 +35,6 @@ build/
 dist/
 *.egg-info/
 *.tar
-*.zip
+*.ziptls.crt
+tls.key
+tls.crt
